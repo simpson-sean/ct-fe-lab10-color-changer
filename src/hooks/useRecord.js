@@ -17,7 +17,11 @@ export const useRecord = (init) => {
         ]);
         setCurrentColor(newColor);
 
-    }
+    };
 
-    return { currentColor, record };
+    const undoColor = () => {
+        setCurrentColor(colorHistory[currentIndex -1])
+    };
+
+    return { currentColor, record, undoColor };
 }
