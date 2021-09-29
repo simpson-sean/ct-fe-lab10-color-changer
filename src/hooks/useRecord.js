@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-export const useRecord = (init) => {
+export const useRecord = (init = 'FFEE00') => {
     const [ currentColor, setCurrentColor ] = useState(init);
     const [ colorHistory, setColorHistory ] = useState([init]);
     const [ currentIndex, setIndex ] = useState(0);
@@ -20,8 +20,18 @@ export const useRecord = (init) => {
     };
 
     const undoColor = () => {
-        setCurrentColor(colorHistory[currentIndex -1])
+       if(currentIndex > 0) {
+            setCurrentColor(colorHistory[currentIndex -1])
+       }
+       else {return}
     };
 
-    return { currentColor, record, undoColor };
+    const redoColor = () => {
+       if(currentIndex < colorHistory.length -1) {
+            setCurrentColor(colorHistory[currentIndex +1])
+    }
+    else {return}
+    };
+    
+    return { currentColor, record, undoColor, redoColor };
 }
