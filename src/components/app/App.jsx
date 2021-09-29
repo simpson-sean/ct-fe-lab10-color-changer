@@ -1,28 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useRecord } from '../../hooks/useRecord';
 
 
-const useRecord = (init) => {
-     const [ currentColor, setCurrentColor ] = useState(init);
-    //  const { record, useRecord } = useState()
-    //  const { undo, setUndo } = useState();
-    //  const { redo, setRedo } = useState();
-
-    return {currentColor};
-    
-};
-
-function App() {
-  const { currentColor } = useRecord('#FF0000');
+export default function App() {
+  const { currentColor, record, undoColor, redoColor } = useRecord('#FF0000');
 
   return (
     <>
-      <button>undo</button>
-      <button>redo</button>
-      <input type="color" value={currentColor} />
-      <div style={{ backgroundColor: currentColor, width: '10rem', height: '10rem' }}></div>
+      <button onClick={undoColor} aria-label='undo-button'>undo</button>
+      <button onClick={redoColor} aria-label='redo-button'>redo</button>
+      <input type="color" aria-label='col-selector'value={currentColor} onChange={({ target }) => record(target.value)} />
+      <div style={{ backgroundColor: currentColor, width: '10rem', height: '10rem' }} data-testid='render-div'></div>
     </>
   )
- }
-
-
-export default App;
+}
